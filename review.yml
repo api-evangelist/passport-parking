@@ -1,0 +1,112 @@
+aid: passport-parking
+name: Passport
+review:
+  question: Does Passport expose a documented public WebSocket API?
+  answer: false
+  date: '2026-07-03'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was authored. Passport's own event delivery to partners
+    is server-to-endpoint webhook-style HTTP: it publishes versioned "parking
+    event schemas" (for example parking_session_started v3.0.0) that describe the
+    JSON payloads pushed to a partner's endpoint when a session's lifecycle
+    changes. That is an outbound HTTP webhook contract, not a client-subscribed
+    server-push transport, and there is no documented WebSocket or SSE channel on
+    Passport's own API to model. In addition, the full API is partner-gated:
+    exact endpoints require registered OAuth client credentials, so no verified
+    channel/binding detail could be captured for an AsyncAPI document.
+findings:
+  summary: |
+    Passport (Passport Labs) does not publish a documented public WebSocket API.
+    Passport runs a real, publicly readable developer portal at
+    developer.passportinc.com, but the APIs themselves are partner-gated: access
+    is restricted to authenticated applications, and partners are issued
+    credentials when they register their application with Passport's identity
+    provider (OAuth-style client credentials). The documented API surface is
+    request/response REST over HTTPS for parking sessions and quotes, rates,
+    bulk environment export, and enforcement immobilizations, plus outbound
+    webhook-style "parking event schemas" for session lifecycle events. No
+    realtime, bidirectional, or streaming WebSocket (ws:// or wss://) endpoint is
+    documented anywhere in Passport's developer portal as of the review date.
+  accessModel: |
+    Partner / agency-gated. Passport serves 800+ cities, universities, and
+    agencies. The developer docs are public to read, but calling the APIs
+    requires becoming a partner: register an application, receive OAuth client
+    credentials from Passport's identity provider, and authenticate every call.
+    Rates and rules are configured by Passport's customers and pushed to payment
+    providers via API. Commercial terms are partnership / agency-contract based;
+    there is no publicly listed self-serve pricing. The partnerships page is the
+    access and pricing front door.
+  endpointsModeled: true
+  endpointsModeledNote: |
+    Passport's API reference is a client-rendered (SPA) portal and the concrete
+    request methods, paths, and base host are behind the partner-gated
+    experience, so exact endpoint paths and the base URL (likely on an
+    api.passportinc.com host) could not be verified from public HTML. The apis.yml
+    entry lists the real, documented API sections with their real reference URLs
+    but does not fabricate an OpenAPI definition or exact endpoint paths.
+  transports:
+    - protocol: REST
+      scheme: https
+      documented: true
+      note: Parking sessions/quotes, rates, environment bulk export, and immobilizations are request/response REST over HTTPS, gated by partner OAuth credentials.
+    - protocol: Webhook
+      scheme: https
+      documented: true
+      note: Versioned "parking event schemas" (e.g. parking_session_started v3.0.0) are outbound HTTP webhook payloads pushed to a partner endpoint. Server-to-endpoint HTTP, not WebSocket.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented anywhere in Passport's developer portal as of the review date.
+  documentedApiSections:
+    - Parking Sessions & Quotes (create a parking session, stop a parking session, quotes)
+    - Parking Rates (determine the rate for a location and duration)
+    - Parking Bulk Export / Environment Export (single-use URL to a JSON of zones, zone numbers, geolocation, rules)
+    - Parking Event Schemas (versioned webhook event payloads such as parking_session_started v3.0.0)
+    - Immobilizations (enforcement immobilization / boot records)
+    - Core Concepts / API Security (OAuth partner-credential authentication)
+sources:
+  - url: https://developer.passportinc.com/
+    type: Documentation
+    note: Passport's API developer portal home. Client-rendered docs; APIs are partner-gated.
+  - url: https://developer.passportinc.com/docs/core-concepts/ZG9jOjE2MDI2OTk-api-security
+    type: Documentation
+    note: API Security / Core Concepts. Access restricted to authenticated apps; partners get credentials on registration. No WebSocket mentioned.
+  - url: https://developer.passportinc.com/docs/parking-sessions-quotes/13a733cdcae7c-create-a-parking-session
+    type: APIReference
+    note: Create a parking session (REST).
+  - url: https://developer.passportinc.com/docs/parking-sessions-quotes/y8i8yj7mfx4vr-stop-a-parking-session
+    type: APIReference
+    note: Stop a parking session, with partial refund support in eligible zones (REST).
+  - url: https://developer.passportinc.com/docs/parking-rates/YXBpOjI1OTk0NTg0
+    type: APIReference
+    note: Rates API - determine parking rate for a location; rates set per customer/location.
+  - url: https://developer.passportinc.com/docs/parking-bulk-export/b3A6MjU5OTIzNjY
+    type: APIReference
+    note: Environment Export API - single-use URL to a JSON of zones, zone numbers, latitude/longitude.
+  - url: https://developer.passportinc.com/docs/parking-event-schemas/f7f18f6220972
+    type: APIReference
+    note: Parking event schemas - parking_session_started event v3.0.0. Webhook-style HTTP payloads, not WebSocket.
+  - url: https://developer.passportinc.com/docs/immobilizations/ac6df0372e30f-update-an-existing-immobilization
+    type: APIReference
+    note: Immobilizations API - update an existing immobilization (enforcement).
+  - url: https://developer.passportinc.com/docs/integration-solutions/f17572d5e0dff-full-parking-payments
+    type: Documentation
+    note: Full parking payments integration guide.
+  - url: https://www.passportinc.com/resources/developers/
+    type: Documentation
+    note: Passport for Developers - open API positioning, partner access model, no SDK required.
+  - url: https://www.passportinc.com/resources/partnerships/
+    type: Documentation
+    note: Partnerships - the access and commercial front door; terms are partnership/contract based.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket protocol surface exists. Passport's own event delivery is
+    outbound webhook-style HTTP (versioned parking event schemas), and the rest
+    of the documented surface is request/response REST behind partner OAuth
+    credentials. No AsyncAPI document was created because there is no
+    client-subscribed server-push transport on Passport's own API to model, and
+    the partner-gated portal did not expose verifiable channel/binding detail.
