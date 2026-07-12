@@ -1,0 +1,15 @@
+generated: '2026-07-11'
+method: searched
+probe: true
+source: https://security.passportinc.com/
+url: https://security.passportinc.com/
+certifications:
+- SOC 2
+- PCI DSS
+evidence:
+- source: https://security.passportinc.com/
+  keywords:
+  - soc 2
+  - soc2
+  - pci dss
+  - pci-dss

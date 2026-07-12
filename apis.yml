@@ -109,6 +109,10 @@ apis:
     parking enforcement and compliance workflow. Part of the broader enforcement
     and citations product surface.
 common:
+- type: TrustCenter
+  url: security/passport-parking-trust-center.yml
+- type: DomainSecurity
+  url: security/passport-parking-domain-security.yml
 - type: LinkedIn
   url: https://www.linkedin.com/company/passport-labs
 - type: Website
@@ -117,6 +121,8 @@ common:
   url: https://developer.passportinc.com/
 - type: Plans
   url: https://www.passportinc.com/resources/partnerships/
+- url: https://www.passportinc.com/feed/
+  type: Blog
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
