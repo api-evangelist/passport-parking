@@ -92,6 +92,10 @@ apis:
 - aid: passport-parking:passport-parking-event-schemas
   name: Passport Parking Event Schemas
   tags:
+  - Event
+  - Webhook
+  - Schemas
+  tags_raw:
   - Events
   - Webhooks
   - Schemas
