@@ -105,7 +105,7 @@ apis:
   tags:
   - Event
   - Webhook
-  - Schemas
+  - Schema
   tags_raw:
   - Events
   - Webhooks
