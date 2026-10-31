@@ -1,4 +1,4 @@
-# Passport (passport-parking)
+# Passport
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,77 +64,90 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Passport (Passport Labs) is a mobility management platform for cities, universities, and agencies, covering digital parking payments, enforcement, permits, and curbside management, and is used by 800+ agencies. Passport runs a partner developer program at [developer.passportinc.com](https://developer.passportinc.com/) whose REST APIs let parking apps, navigation apps, in-car infotainment, and mobility/POS systems create and stop parking sessions, quote and determine rates, bulk-export the parking environment (zones, spaces, rules), receive parking event schemas, and manage enforcement immobilizations. Rates and rules are configured once by Passport's customers and pushed to payment providers via API. No SDK is required.
+Passport (Passport Labs) is a mobility management platform for cities, universities, and agencies, covering digital parking payments, enforcement, permits, and curbside management, and is used by 800+ agencies. Passport exposes a partner developer program at developer.passportinc.com whose REST APIs let parking apps, navigation apps, in-car infotainment, and mobility/POS systems create and stop parking sessions, quote and determine rates, bulk-export the parking environment (zones, spaces, rules), receive parking event schemas, and manage enforcement immobilizations. Rates and rules are configured once by Passport's customers and pushed to payment providers via API. Access is gated - partners register an application, are issued OAuth client credentials by Passport's identity provider, and only authenticated partner applications may call the public APIs. No SDK is required. Commercial terms are partnership / agency-contract based rather than publicly listed self-serve pricing.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/passport-parking/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/passport-parking/refs/heads/main/apis.yml)
+**Areas:** Parking · Mobility · Smart Cities · Payments · Enforcement · Curbside Management · Transportation
 
-## Access model (read this first)
+## Passport on APIs.io
 
-Passport's API is **partner / agency-gated**, not open self-serve:
+Everything profiled for Passport is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/passport-parking/](https://apis.io/providers/passport-parking/)** — or go straight to one of the APIs or properties below.
 
-- The developer documentation at `developer.passportinc.com` is **public to read**, but the APIs **cannot be called anonymously**.
-- Access is restricted to **authenticated applications**. Partners register their application and are issued **OAuth client credentials** by Passport's identity provider; every API call must be authenticated.
-- You typically reach the APIs by **becoming a Passport partner** (parking app, navigation, automotive, MaaS, payments, or POS), which unlocks Passport's database of city rules, rates, and restrictions across hundreds of cities.
-- **Commercial terms are partnership / agency-contract based.** There is no publicly listed self-serve API pricing; the [Partnerships](https://www.passportinc.com/resources/partnerships/) page is the access and pricing front door.
+### APIs (5)
 
-Because the reference portal is client-rendered and the concrete endpoints, request/response shapes, and base host sit behind the partner-gated experience, this entry **lists the real, documented API sections with their real reference URLs but does not fabricate an OpenAPI definition, exact endpoint paths, or a base URL**. Endpoints are marked as modeled in `review.yml` (`endpointsModeled: true`).
+- [Passport Parking Sessions and Quotes API](https://apis.io/apis/passport-parking/passport-parking-sessions-quotes-api/) — Quote, create, and stop parking sessions on behalf of a driver in a Passport-managed zone - the core surface behind facilitating a paid parking session from…
+- [Passport Parking Rates API](https://apis.io/apis/passport-parking/passport-parking-rates-api/) — Determine the parking rate for a location and duration. Rates are defined uniquely by each Passport customer (city, university, or operator) and vary by…
+- [Passport Parking Environment Export API](https://apis.io/apis/passport-parking/passport-parking-environment-export-api/) — Bulk export of the parking environment. Returns a single-use URL to download a JSON file describing zones, zone numbers, geolocation (latitude and…
+- [Passport Parking Event Schemas](https://apis.io/apis/passport-parking/passport-parking-event-schemas/) — Versioned JSON schemas for the parking events Passport emits to partners (for example a parking_session_started event, v3.0.0). These are server-to-endpoint…
+- [Passport Immobilizations API](https://apis.io/apis/passport-parking/passport-immobilizations-api/) — Manage enforcement immobilizations (vehicle boots) - for example updating an existing immobilization record - as part of Passport's digital parking…
 
-## Tags
+### Published properties
 
-- Parking
-- Mobility
-- Smart Cities
-- Payments
-- Enforcement
-- Curbside Management
-- Transportation
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## Timestamps
+#### Security (2)
 
-- **Created:** 2026-07-03
-- **Modified:** 2026-07-03
+Authentication, trust centre, and vulnerability disclosure.
 
-## APIs
+- [Passport Parking Domain Security](https://apis.io/security/passport-parking/passport-parking-domain-security/)
+- [Passport Parking Trust Center](https://apis.io/security/passport-parking/passport-parking-trust-center/)
 
-### Passport Parking Sessions and Quotes API
+## Where to find this API
 
-Quote, create, and stop parking sessions on behalf of a driver in a Passport-managed zone - the core surface behind facilitating a paid parking session from a parking app, navigation app, or in-car experience. Includes quoting the price for a duration and stopping a session early with support for partial refunds in eligible zones.
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-- **Human URL:** [Create a parking session](https://developer.passportinc.com/docs/parking-sessions-quotes/13a733cdcae7c-create-a-parking-session)
-- **Also:** [Stop a parking session](https://developer.passportinc.com/docs/parking-sessions-quotes/y8i8yj7mfx4vr-stop-a-parking-session)
-
-### Passport Parking Rates API
-
-Determine the parking rate for a location and duration. Rates are defined uniquely by each Passport customer (city, university, or operator) and vary by location, time, and rules, giving partners a single source of truth for what a driver should be charged before starting a session.
-
-- **Human URL:** [Rates API](https://developer.passportinc.com/docs/parking-rates/YXBpOjI1OTk0NTg0)
-
-### Passport Parking Environment Export API
-
-Bulk export of the parking environment. Returns a single-use URL to download a JSON file describing zones, zone numbers, geolocation (latitude and longitude), and associated rules and restrictions for the cities a partner is authorized to serve - the block-by-block data used to map and price parking.
-
-- **Human URL:** [Environment Export API](https://developer.passportinc.com/docs/parking-bulk-export/b3A6MjU5OTIzNjY)
-
-### Passport Parking Event Schemas
-
-Versioned JSON schemas for the parking events Passport emits to partners (for example a `parking_session_started` event, v3.0.0). These are server-to-endpoint webhook-style event payloads that let partner systems react to session lifecycle changes; there is no WebSocket transport.
-
-- **Human URL:** [Parking event schemas](https://developer.passportinc.com/docs/parking-event-schemas/f7f18f6220972)
-
-### Passport Immobilizations API
-
-Manage enforcement immobilizations (vehicle boots) - for example updating an existing immobilization record - as part of Passport's digital parking enforcement and compliance workflow. Part of the broader enforcement and citations product surface.
-
-- **Human URL:** [Immobilizations API](https://developer.passportinc.com/docs/immobilizations/ac6df0372e30f-update-an-existing-immobilization)
-
-## Common Properties
-
-- [LinkedIn](https://www.linkedin.com/company/passport-labs)
 - [Website](https://www.passportinc.com)
 - [Documentation](https://developer.passportinc.com/)
-- [Plans / Partnerships](https://www.passportinc.com/resources/partnerships/)
+- [Blog](https://www.passportinc.com/feed/)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 10.2** — minimal · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 62.5 |
+| Contract quality | 0.0 |
+| Contract governance | 0.0 |
+| Operational transparency | 0.0 |
+| Developer ergonomics | 19.0 |
+| Access clarity | 7.9 |
+
+**Agent readiness 0.0** — human-only
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | — |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 9.8** — Payments
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/passport-parking/](https://apis.io/providers/passport-parking/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Passport: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/passport-parking/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
